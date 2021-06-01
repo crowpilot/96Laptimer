@@ -1,10 +1,13 @@
-# m5-motorcycle-logger
-A opensource motorcycle logger<br />
-M5stack Fire(or gray),GPS dashboard for moto,car,etc...<br />
+# 96laptimer
+Crow's laptimer
+A opensource motorcycle laptimer<br />
+M5stack Fire(or gray)& GPS...<br />
 
-オープンな感じで作ってるバイク用のロガーです。<br />
-いろいろなデータを収集したり表示したりする予定<br />
-製作中の記録は<a href="https://crows.tokyo/m5-stack-motocycle-diy/">こちら</a><br />
+オープンな感じで作ってるサーキット用ラップタイマーです。<br />
+サーキットごとにGPSでラップタイムとれるようにする予定<br />
+<br />
+m5-motorcycle-loggerのソースを流用しています。<br />
+データログ機能はほぼそのまま<br />
 GPSとIMUによる位置、姿勢表示<br />
 各種G<br />
 その他の情報を記録します。<br />
