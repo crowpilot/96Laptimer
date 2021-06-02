@@ -154,3 +154,34 @@ int Watch::getSeconds() {
 void Watch::resetDisplay(){
   M5.Lcd.fillRect(_x,_y,_w,_h,TFT_BLACK);
 }
+
+//for laptimer
+
+void Watch::setGrid(float lat1,float lon1,float lat2,float lon2){
+  _grid1.lat = lat1;
+  _grid1.lon = lon1;
+
+  _grid2.lat=lat2;
+  _grid2.lon=lon2;
+} 
+
+void Watch::checkGrid(float lat,float lon){
+  _lastPos = _pos;
+
+  _pos.lat = lat;
+  _pos.lon = lon;
+
+  //(ABxAC)*(ABxAD)<0 and ...
+  //A=pos B=lastPos
+  //C=grid1 D=grid2
+
+  float abac = (_lastPos.lat-_pos.lat)*(_grid1.lon-_pos.lon) - (_grid1.lat-_pos.lat)*(_lastPos.lon-_pos.lon);
+  float abad = (_lastPos.lat-_pos.lat)*(_grid2.lon-_pos.lon) - (_grid2.lat-_pos.lat)*(_lastPos.lon-_pos.lon);
+
+  float cdcb = (_grid2.lat-_grid1.lat)*(_lastPos.lon-_grid1.lon) - (_lastPos.lat-_grid1.lat)*(_grid2.lon-_grid1.lon);
+  float cdca = (_grid2.lat-_grid1.lat)*(_pos.lon-_grid1.lon) - (_pos.lat-_grid1.lat)*(_grid2.lon-_grid1.lon);
+
+  if(abac*abad<0 and cdcb*cdca<0){
+    Watch::grid();
+  }
+}

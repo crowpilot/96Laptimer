@@ -75,7 +75,7 @@ void setup() {
   //GPSserial.begin(9600);
 
   //watch
-  watch.setCountPos(80,10);
+  watch.setCountPos(100,10);
   watch.lapMode();
 
   //LED
@@ -104,6 +104,8 @@ void setup() {
     xTaskCreatePinnedToCore(refreshIMUGraph, "IMU", 8192, NULL, 1, NULL, 1);
     xTaskCreatePinnedToCore(writeData, "writeData", 8192, NULL, 2, &xHandleWriteData, 0);
   //}
+
+  watch.setGrid(0,0,0,1);
 }
 
 
@@ -203,6 +205,7 @@ void refreshENV(void* arg) {
 }
 
 void writeData(void* arg) {
+  static float testx = -1;
   //core 0
   //write CSV log to SD card
   //float yaw, roll, pitch, temp;
@@ -214,6 +217,7 @@ void writeData(void* arg) {
         xSemaphoreTake(xMutex, portMAX_DELAY);
         watch.clockAdjust(gps.time.hour(), gps.time.minute(), gps.time.second());
         logcsv.setTime(gps.date.year(), gps.date.month(), gps.date.day(), watch.getHours(), watch.getMinutes(), watch.getSeconds());
+        //watch.setPos();
         xSemaphoreGive(xMutex);
       }
     }
@@ -222,7 +226,12 @@ void writeData(void* arg) {
     }
     logcsv.setGPS(gps.location.lat(), gps.location.lng());
 
+    
+    
     xSemaphoreTake(xMutex, portMAX_DELAY);
+
+    watch.checkGrid(testx,0.5);
+    testx+=0.01;
     //M5.Lcd.setCursor(0, 0);
     //M5.Lcd.setTextSize(2);
     //M5.Lcd.print(gps.satellites.value());
