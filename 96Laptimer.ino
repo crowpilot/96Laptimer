@@ -43,7 +43,7 @@ Adafruit_SHT31 sht30 = Adafruit_SHT31();
 
 //Clock and Laptime
 Dashboard dashboard;
-Watch watch = Watch(30, 159, 310, 50);
+Watch watch = Watch(10, 159, 310, 50);
 
 
 //http server
@@ -75,7 +75,7 @@ void setup() {
   //GPSserial.begin(9600);
 
   //watch
-  watch.setCountPos(30,90);
+  watch.setCountPos(80,10);
   watch.lapMode();
 
   //LED
@@ -84,7 +84,7 @@ void setup() {
   //IMU
   ins.init();
   
-  dashboard.createMeter(30,50,25);
+  dashboard.createMeter(30,40,25);
 
 
   //ENV2
@@ -223,9 +223,9 @@ void writeData(void* arg) {
     logcsv.setGPS(gps.location.lat(), gps.location.lng());
 
     xSemaphoreTake(xMutex, portMAX_DELAY);
-    M5.Lcd.setCursor(0, 0);
-    M5.Lcd.setTextSize(2);
-    M5.Lcd.print(gps.satellites.value());
+    //M5.Lcd.setCursor(0, 0);
+    //M5.Lcd.setTextSize(2);
+    //M5.Lcd.print(gps.satellites.value());
     //M5.Lcd.print(M5.Power.getBatteryLevel());
     logcsv.setAHRS(ins.pitch(), ins.roll(), ins.yaw());
     logcsv.setG(ins.accelG(), 0);

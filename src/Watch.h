@@ -40,6 +40,7 @@ class Watch {
     unsigned long _startMillis=0;
     unsigned long _clockMillis=0;
     unsigned long _lastLap[10];
+  unsigned long _fastest=0;
     int _hours;
     int _minutes;
     int _seconds;

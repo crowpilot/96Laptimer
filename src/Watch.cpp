@@ -93,7 +93,7 @@ void Watch::displayLap() {
   M5.Lcd.setCursor(_countX,_countY);
   M5.Lcd.setTextSize(4);
   M5.Lcd.printf("Lap:");
-  M5.Lcd.setTextSize(7);
+  M5.Lcd.setTextSize(6);
   M5.Lcd.printf("%02d",_lapCount);
   M5.Lcd.setCursor(_x,_y);
   //M5.Lcd.printf("%02lu:",(Watch::lapTime()/3600000)%24);
@@ -109,7 +109,14 @@ void Watch::displayLap() {
 
 void Watch::grid(){
   _lastLap[_lapCount%10]=Watch::lapTime();
+  if( _fastest>_lastLap[_lapCount%10] or _fastest==0){
+    _fastest = _lastLap[_lapCount%10];
+  }
   _lapCount++;
+
+  M5.Lcd.setCursor(180,10);
+  M5.Lcd.setTextSize(2);
+  M5.Lcd.printf("%03lu",_fastest%1000);
   Watch::startLap();
 }
 
